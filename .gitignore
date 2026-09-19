@@ -1,58 +1,52 @@
-# Python
+﻿# Python
 __pycache__/
 *.py[cod]
 *.pyo
+*.pyd
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
 
-# Virtual environment
+# Virtual environments
 .venv/
 venv/
 env/
 
-# Environment variables and secrets
+# Environment / secrets
 .env
 .env.*
 !.env.example
 
-# Jupyter
-.ipynb_checkpoints/
-
-# Local data
-data/raw/*
-data/processed/*
-!data/raw/.gitkeep
-!data/processed/.gitkeep
-
-# Logs
-logs/*
-!logs/.gitkeep
-
-# ML artifacts
-ml/artifacts/
-*.pkl
-*.joblib
-*.model
-
-# dbt
-dbt/target/
-dbt/dbt_packages/
-dbt/logs/
-dbt/.user.yml
-
-# IDE
+# OS / IDE
+.DS_Store
+Thumbs.db
 .vscode/
 .idea/
 
-# OS
-.DS_Store
-Thumbs.db
+# Logs
+*.log
+logs/
 
-# Test and cache files
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-htmlcov/
+# dbt
+dbt/target/
+dbt/logs/
+dbt/packages/
+dbt/dbt_packages/
 
-# Secrets
-*.pem
-*.key
+# Local/generated data
+data/
+ml/artifacts/
+ml/features/*.csv
+ml/evaluation/*.csv
+
+# Tableau temporary artifacts
+*.hyper
+dashboard/*.twb Files/
+
+# Python distribution
+dist/
+build/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/

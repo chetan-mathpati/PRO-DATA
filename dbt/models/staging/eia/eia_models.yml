@@ -1,0 +1,23 @@
+version: 2
+
+models:
+
+  - name: stg_eia_energy
+    description: >
+      Cleaned and standardized EIA annual petroleum and liquids observations.
+
+    columns:
+      - name: country_code
+        description: EIA country or region identifier.
+
+      - name: product_id
+        description: EIA energy product identifier.
+
+      - name: activity_id
+        description: EIA activity identifier such as production or consumption.
+
+      - name: period
+        description: Annual observation period.
+
+      - name: value
+        description: Numeric source observation; unavailable source values are NULL.

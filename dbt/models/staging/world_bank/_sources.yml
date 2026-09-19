@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: world_bank
+    schema: raw
+    tables:
+      - name: world_bank_indicators
+        description: Source-aligned World Bank economic observations.
+        columns:
+          - name: country_code
+            tests:
+              - not_null
+          - name: indicator_code
+            tests:
+              - not_null
+          - name: year
+            tests:
+              - not_null

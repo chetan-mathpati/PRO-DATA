@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: eia
+    schema: raw
+    tables:
+      - name: eia_energy
+        description: >
+          Annual international petroleum and liquids observations
+          ingested from the U.S. Energy Information Administration.
+
+        columns:
+          - name: country_code
+            tests:
+              - not_null
+
+          - name: product_id
+            tests:
+              - not_null
+
+          - name: activity_id
+            tests:
+              - not_null
+
+          - name: period
+            tests:
+              - not_null

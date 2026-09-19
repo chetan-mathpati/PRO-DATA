@@ -1,0 +1,68 @@
+version: 2
+
+models:
+
+  - name: int_country_economic_energy_year
+    description: >
+      Integrated country-year analytical layer combining World Bank
+      economic indicators with EIA petroleum and liquids observations.
+
+    tests:
+      - unique:
+          column_name: "country_code || '-' || year"
+      - not_null:
+          column_name: country_code
+      - not_null:
+          column_name: year
+
+  - name: mart_country_economic_energy
+    description: >
+      Business-ready country-year model combining macroeconomic conditions,
+      trade indicators, petroleum production and petroleum consumption,
+      with time-series derived metrics.
+
+    tests:
+      - unique:
+          column_name: "country_code || '-' || year"
+      - not_null:
+          column_name: country_code
+      - not_null:
+          column_name: year
+
+    columns:
+
+      - name: country_code
+        description: Country identifier.
+
+      - name: year
+        description: Observation year.
+
+      - name: gdp_usd
+        description: GDP in current US dollars.
+
+      - name: gdp_growth_pct
+        description: Annual GDP growth percentage.
+
+      - name: inflation_pct
+        description: Annual consumer-price inflation percentage.
+
+      - name: total_petroleum_production_tbpd
+        description: Total petroleum and other liquids production in thousand barrels per day.
+
+      - name: crude_oil_production_tbpd
+        description: Crude oil including lease condensate production in thousand barrels per day.
+
+      - name: petroleum_consumption_tj
+        description: Petroleum and other liquids consumption in terajoules.
+
+      - name: crude_share_of_petroleum_production_pct
+        description: Crude oil production as a percentage of total petroleum production.
+
+      - name: petroleum_production_yoy_pct
+        description: Year-over-year change in total petroleum production.
+
+      - name: gdp_growth_5yr_avg
+        description: Five-year rolling average of annual GDP growth.
+
+      - name: inflation_5yr_avg
+        description: Five-year rolling average of annual inflation.

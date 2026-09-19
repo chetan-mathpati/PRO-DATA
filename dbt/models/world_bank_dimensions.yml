@@ -1,0 +1,42 @@
+version: 2
+
+models:
+
+  - name: dim_country
+    description: Canonical country dimension derived from World Bank source data.
+    columns:
+      - name: country_key
+        tests:
+          - not_null
+          - unique
+      - name: country_code
+        tests:
+          - not_null
+          - unique
+      - name: country_name
+        tests:
+          - not_null
+
+  - name: dim_indicator
+    description: Canonical indicator dimension with business domains.
+    columns:
+      - name: indicator_key
+        tests:
+          - not_null
+          - unique
+      - name: indicator_code
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_period
+    description: Annual calendar dimension covering available World Bank observation years.
+    columns:
+      - name: period_key
+        tests:
+          - not_null
+          - unique
+      - name: year
+        tests:
+          - not_null
+          - unique
