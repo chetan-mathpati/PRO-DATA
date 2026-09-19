@@ -1,4 +1,4 @@
-﻿dbt-core==1.12.0
+dbt-core==1.12.0
 dbt-postgres==1.11.0
 numpy==2.5.3
 pandas==3.0.6
@@ -7,3 +7,4 @@ python-dotenv==1.2.3
 requests==2.34.2
 scikit-learn==1.9.1
 SQLAlchemy==2.0.54
+joblib==1.6.0

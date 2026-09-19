@@ -1,45 +1,24 @@
-# PRO DATA — Architecture
+# PRO DATA - Architecture
 
-World Bank API + EIA API
-        ↓
-Python ingestion
-        ↓
-PostgreSQL raw layer
-        ↓
-dbt staging
-        ↓
-dbt intermediate models
-        ↓
-Analytical marts
-        ↓
- ┌───────────────┬───────────────┐
- ↓               ↓               ↓
-SQL Analytics   ML Features    Tableau
-                    ↓
-                ML Model
-                    ↓
-                Evaluation
+## System Overview
 
-## Core Technology
+PRO DATA is an end-to-end analytical platform that integrates macroeconomic indicators from the World Bank with international petroleum and liquids data from the U.S. Energy Information Administration (EIA).
 
-- Python
-- PostgreSQL
-- SQL
-- dbt
-- pandas
-- scikit-learn
-- Tableau
-- Git/GitHub
-
-## Analytical Grain
-
-One country × one year.
-
-## Design Principles
-
-1. Preserve source data in raw storage.
-2. Keep transformations reproducible.
-3. Use explicit analytical grain.
-4. Test data quality before analysis.
-5. Use chronological validation for ML.
-6. Keep Tableau dependent on curated analytical data.
+```text
+World Bank API ----\
+                    +--> Python ingestion --> PostgreSQL raw
+EIA API -----------/                              |
+                                                   v
+                                             dbt staging
+                                                   |
+                                                   v
+                                          dbt intermediate
+                                                   |
+                                                   v
+                                           Analytical marts
+                                          /        |        \
+                                         v         v         v
+                                   SQL Analytics   ML     Tableau
+                                                     |
+                                                     v
+                                                 Evaluation

@@ -1,11 +1,12 @@
-# PRO DATA — Methodology
+PRO DATA - METHODOLOGY
 
-## Purpose
+PURPOSE
 
-PRO DATA combines economic indicators from the World Bank with international
-petroleum and liquids data from the U.S. Energy Information Administration.
+PRO DATA combines economic indicators from the World Bank with
+international petroleum and liquids data from the U.S. Energy
+Information Administration.
 
-The objective is to create an analytical system that connects:
+The analytical system connects:
 
 - economic growth
 - inflation
@@ -15,53 +16,120 @@ The objective is to create an analytical system that connects:
 - crude oil production
 - petroleum consumption
 
-## Data grain
+
+DATA GRAIN
 
 The integrated analytical grain is:
 
-**one country × one year**
+one country x one year
 
-## Pipeline
+Source datasets have different structures and coverage periods.
+Observations are normalized before being integrated into the
+country-year analytical model.
+
+
+PIPELINE
 
 External APIs
-→ raw PostgreSQL tables
-→ dbt staging
-→ dbt intermediate transformations
-→ analytical marts
-→ SQL analytics
-→ ML features
-→ Tableau datasets
+    |
+    v
+Python ingestion
+    |
+    v
+PostgreSQL raw tables
+    |
+    v
+dbt staging
+    |
+    v
+dbt intermediate transformations
+    |
+    v
+Analytical marts
+    |
+    +---- SQL analytics
+    |
+    +---- ML features
+    |
+    +---- Tableau datasets
 
-## Data quality
 
-The pipeline uses:
+INGESTION
 
-- not-null tests
-- uniqueness tests
+WORLD BANK
+
+The World Bank ingestion layer retrieves the configured economic
+indicators and stores source observations in PostgreSQL.
+
+The business key is:
+
+country + indicator + year
+
+Source metadata is preserved with the raw observation.
+
+
+EIA
+
+The EIA ingestion layer retrieves annual petroleum production
+and consumption observations for the configured product and
+activity combinations.
+
+Source representations such as --, empty values and equivalent
+missing-value markers are normalized to database NULL.
+
+
+DATA QUALITY
+
+The pipeline applies:
+
 - source validation
+- primary-key constraints
+- uniqueness tests
+- not-null tests where appropriate
 - duplicate checks
-- explicit normalization of missing source values
-- deterministic transformations
-- idempotent World Bank loading
-- time-aware ML validation
+- missing-value normalization
+- dbt model tests
+- integrated-grain validation
+- database validation scripts
 
-## ML methodology
+Transformations are deterministic and version controlled.
 
-The model predicts whether petroleum production will decline by at least
-10% in the following year.
 
-The target is constructed from the following year's observed production.
+ANALYTICAL TRANSFORMATIONS
 
-The train/test split is chronological rather than random to reduce
-temporal leakage.
+The integrated mart combines economic and energy observations
+at country-year grain.
 
-The current model is intended as an analytical demonstration rather than
-a production forecasting service.
+Derived metrics include:
 
-## Interpretation
+- year-over-year production changes
+- five-year rolling averages
+- crude production share
+- previous-year production values
 
-Correlation between economic and energy variables does not establish
-causation.
+Derived metrics use available observations and do not treat
+missing source values as zero.
 
-Missing observations are retained where source coverage is incomplete
-rather than artificially filled without methodological justification.
+
+ML METHODOLOGY
+
+The experimental model predicts whether petroleum production
+will decline by at least 10 percent in the following year.
+
+The target is constructed from the following year's observed
+petroleum production.
+
+The train/test split is chronological rather than random because
+the target represents a future-year outcome.
+
+The current model is an analytical demonstration, not a
+production forecasting service.
+
+
+INTERPRETATION
+
+Relationships between economic and energy variables are
+descriptive associations. They do not establish causation.
+
+Incomplete source coverage is retained where possible rather
+than being artificially imputed without a documented reason.
